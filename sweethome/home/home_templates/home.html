@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block content %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            {% if home.owner == current_user %}
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('home.update_home', home_id=home.id) }}">Update</a>
+                <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">
+                    Delete
+                </button>
+            </div>
+            {% endif %}
+        </div>
+        <div>
+            <h2><a class="article-title" href="{{ url_for('home.home', home_id=home.id) }}">{{ home.address }} {{
+                home.city }} </a></h2>
+            <br/>
+            {% if home.services %}
+            <h4>Services Purchased</h4>
+            {% for service in home.services %}
+            <li>
+                <a class="article-content"
+                   href="{{ url_for('servicespurchased.servicepurchased', service_id=service.id) }}">{{ service.name }} on {{service.purchase_date}}</a>
+                {% endfor %}
+                {% endif %}
+            </li>
+            <br/><br/>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('servicespurchased.new',home_id=home.id) }}">Purchase
+                New Service</a>
+        </div>
+    </div>
+</article>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">home</h5>
+                <button type="button" class="Close" data-dismiss="modal" aria-label="Yes">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <form action="{{ url_for('home.delete_home', home_id=home.id) }}" method="POST">
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

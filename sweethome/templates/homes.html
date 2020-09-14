@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+{% for home in homes %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="{{ url_for('home.home', home_id=home.id) }}">{{ home.address }}</a>
+            {% if home.owner == current_user %}
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('home.update_home', home_id=home.id) }}">Update</a>
+                <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">
+                    Delete
+                </button>
+            </div>
+            {% endif %}
+        </div>
+        <h2><a class="article-title"">{{ home.address }}</a></h2>
+        <p class="article-content">{{ home.city }}</p>
+    </div>
+</article>
+
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Home? {{home.address }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary btn-danger" href="{{ url_for('home.delete_home',home_id=home.id) }}">Yes</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}
