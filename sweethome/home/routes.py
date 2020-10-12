@@ -19,11 +19,26 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 def new_home():
     form = HomeForm()
     if form.validate_on_submit():
-        home = Home(address=form.address.data, city=form.city.data, home_owner=current_user.id)
-        db.session.add(home)
-        db.session.commit()
-        flash('Your Home has been created!', 'success')
-        return redirect(url_for('main.home'))
+        home = Home(address=form.address.data,
+                    city=form.city.data,
+                    home_owner=current_user.id,
+                    state = form.state.data,
+                    zipcode = form.zipcode.data,
+                    year_built = form.year_built.data,
+                    zillow_url = form.zillow_url.data,
+                    date_posted = form.date_posted.data)
+        new_home = home.query.filter_by(address = home.address, city = home.city,state = home.state, zipcode = home.zipcode).first()
+        if new_home is None:
+            db.session.add(home)
+            db.session.commit()
+            flash('Your Home has been created!', 'success')
+            return redirect(url_for('main.home'))
+
+
+        else:
+            flash('This home already exists')
+            return render_template('create_home.html', title='New Home',
+                           form=form, legend='New Home', error = 'error')
     return render_template('create_home.html', title='New Home',
                            form=form, legend='New Home')
 
