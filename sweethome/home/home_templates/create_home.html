@@ -2,35 +2,44 @@
 {% block content %}
 <div class="content-section">
     <form method="POST" action="">
+        {{ form.csrf_token }}
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">{{ legend }}</legend>
+
             <div class="form-group">
                 {{ form.address.label(class="form-control-label") }}
-                {% if form.address.errors %}
-                    {{ form.address(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.address.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.address(class="form-control form-control-lg") }}
-                {% endif %}
+                {{ form.address(class="form-control form-control-lg") }}
+            </div>
+            <div class="form-group">
+                {{ form.address2.label(class="form-control-label") }}
+                {{ form.address2(class="form-control form-control-lg") }}
             </div>
             <div class="form-group">
                 {{ form.city.label(class="form-control-label") }}
-                {% if form.city.errors %}
-                    {{ form.city(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.content.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.city(class="form-control form-control-lg") }}
-                {% endif %}
+                {{ form.city(class="form-control form-control-lg") }}
             </div>
+            <div class="form-group">
+                {{ form.state.label(class="form-control-label") }}
+                {{ form.state(class="form-control form-control-lg") }}
+            </div>
+            <div class="form-group">
+                {{ form.zipcode.label(class="form-control-label") }}
+                {{ form.zipcode(class="form-control form-control-lg") }}
+            </div>
+            <div class="form-group">
+                {{ form.year_built.label(class="form-control-label") }}
+                {{ form.year_built(class="form-control form-control-lg") }}
+            </div>
+            <div class="form-group">
+               {{ form.zillow_url.label(class="form-control-label") }}
+                    {{ form.zillow_url(class="form-control form-control-lg") }}
+            </div>
+            <div class="form-group">
+                {{ form.date_posted.label(class="form-control-label") }}
+                    {{ form.date_posted(class="form-control form-control-lg") }}
+            </div>
+
         </fieldset>
         <div class="form-group">
             {{ form.submit(class="btn btn-outline-info") }}

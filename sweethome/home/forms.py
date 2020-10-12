@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField, DateField, FileField
+from wtforms.fields.html5 import DateField
+from wtforms import StringField, SubmitField, IntegerField, FileField
 from wtforms.validators import DataRequired
 
 
@@ -11,7 +12,7 @@ class HomeForm(FlaskForm):
     zipcode = StringField('Zipcode', validators=[])
     year_built = IntegerField('Year Buit',validators=[])
     zillow_url = StringField('Zillow URL', validators=[])
-    date_posted = DateField('Creation Date', validators=None)
+    date_posted = DateField('Creation Date')
     submit = SubmitField('Create Home')
 
 class DocumnentUploadForm(FlaskForm):
